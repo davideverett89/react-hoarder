@@ -2,15 +2,39 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+import {
+  BrowserRouter,
+  Route,
+  Redirect,
+  Switch,
+} from 'react-router-dom';
+
 import fbConnection from '../helpers/data/connection';
 
 import Navbar from '../components/shared/Navbar/Navbar';
 
 import Auth from '../components/pages/Auth/Auth';
+import Home from '../components/pages/Home/Home';
+import MyStuff from '../components/pages/MyStuff/MyStuff';
+import New from '../components/pages/New/New';
 
 import './App.scss';
 
 fbConnection();
+
+const PublicRoute = ({ component: Component, authed, ...rest }) => {
+  const routeChecker = (props) => (authed === false
+    ? (<Component {...props} />)
+    : (<Redirect to={{ pathname: '/home', state: { from: props.location } }} />));
+  return <Route {...rest} render={(props) => routeChecker(props)} />;
+};
+
+const PrivateRoute = ({ component: Component, authed, ...rest }) => {
+  const routeChecker = (props) => (authed === true
+    ? (<Component {...props} />)
+    : (<Redirect to={{ pathname: '/auth', state: { from: props.location } }} />));
+  return <Route {...rest} render={(props) => routeChecker(props)} />;
+};
 
 class App extends React.Component {
   state = {
@@ -32,11 +56,21 @@ class App extends React.Component {
   }
 
   render() {
+    const { authed } = this.state;
     return (
       <div className="App">
-        <Navbar />
-        <h2>React Hoarder</h2>
-        <Auth />
+        <BrowserRouter>
+        <React.Fragment>
+          <Navbar authed={authed} />
+          <Switch>
+            <PrivateRoute path='/home' component={Home} authed={authed} />
+            <PrivateRoute path='/mystuff' component={MyStuff} authed={authed} />
+            <PrivateRoute path='/new' component={New} authed={authed} />
+            <PublicRoute path='/auth' component={Auth} authed={authed} />
+            <Redirect from="*" to="/home"/>
+          </Switch>
+        </React.Fragment>
+        </BrowserRouter>
       </div>
     );
   }
