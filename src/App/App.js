@@ -64,7 +64,7 @@ class App extends React.Component {
           <Navbar authed={authed} />
           <Switch>
             <PrivateRoute path='/home' component={Home} authed={authed} />
-            <PrivateRoute path='/mystuff' component={MyStuff} authed={authed} />
+            <PrivateRoute path='/stuff' component={MyStuff} authed={authed} />
             <PrivateRoute path='/new' component={New} authed={authed} />
             <PublicRoute path='/auth' component={Auth} authed={authed} />
             <Redirect from="*" to="/home"/>
