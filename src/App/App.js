@@ -1,12 +1,80 @@
 import React from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
+import {
+  BrowserRouter,
+  Route,
+  Redirect,
+  Switch,
+} from 'react-router-dom';
+
+import fbConnection from '../helpers/data/connection';
+
+import Navbar from '../components/shared/Navbar/Navbar';
+
+import Auth from '../components/pages/Auth/Auth';
+import Home from '../components/pages/Home/Home';
+import MyStuff from '../components/pages/MyStuff/MyStuff';
+import New from '../components/pages/New/New';
+import EditStuff from '../components/pages/EditStuff/EditStuff';
+import SingleStuff from '../components/pages/SingleStuff/SingleStuff';
+
 import './App.scss';
 
+fbConnection();
+
+const PublicRoute = ({ component: Component, authed, ...rest }) => {
+  const routeChecker = (props) => (authed === false
+    ? (<Component {...props} />)
+    : (<Redirect to={{ pathname: '/home', state: { from: props.location } }} />));
+  return <Route {...rest} render={(props) => routeChecker(props)} />;
+};
+
+const PrivateRoute = ({ component: Component, authed, ...rest }) => {
+  const routeChecker = (props) => (authed === true
+    ? (<Component {...props} />)
+    : (<Redirect to={{ pathname: '/auth', state: { from: props.location } }} />));
+  return <Route {...rest} render={(props) => routeChecker(props)} />;
+};
+
 class App extends React.Component {
+  state = {
+    authed: false,
+  }
+
+  componentDidMount() {
+    this.removeListener = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ authed: true });
+      } else {
+        this.setState({ authed: false });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.removeListener();
+  }
+
   render() {
+    const { authed } = this.state;
     return (
       <div className="App">
-        <h2>INSIDE APP COMPONENT</h2>
-        <button className="btn btn-info">TEST</button>
+        <BrowserRouter>
+        <React.Fragment>
+          <Navbar authed={authed} />
+          <Switch>
+            <PrivateRoute path='/home' component={Home} authed={authed} />
+            <PrivateRoute path='/stuff/:stuffId/edit' component={EditStuff} authed={authed} />
+            <PrivateRoute path='/stuff/:stuffId' component={SingleStuff} authed={authed} />
+            <PrivateRoute path='/stuff/new' component={New} authed={authed} />
+            <PrivateRoute path='/stuff' component={MyStuff} authed={authed} />
+            <PublicRoute path='/auth' component={Auth} authed={authed} />
+            <Redirect from="*" to="/home"/>
+          </Switch>
+        </React.Fragment>
+        </BrowserRouter>
       </div>
     );
   }
