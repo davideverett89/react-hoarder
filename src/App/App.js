@@ -11,7 +11,7 @@ import {
 
 import fbConnection from '../helpers/data/connection';
 
-import Navbar from '../components/shared/Navbar/Navbar';
+import MyNavbar from '../components/shared/MyNavbar/MyNavbar';
 
 import Auth from '../components/pages/Auth/Auth';
 import Home from '../components/pages/Home/Home';
@@ -63,12 +63,12 @@ class App extends React.Component {
       <div className="App">
         <BrowserRouter>
         <React.Fragment>
-          <Navbar authed={authed} />
+          <MyNavbar authed={authed} />
           <Switch>
             <PrivateRoute path='/home' component={Home} authed={authed} />
-            <PrivateRoute path='/stuff/:stuffId/edit' component={EditStuff} authed={authed} />
+            <PrivateRoute path='/edit/:stuffId/' component={EditStuff} authed={authed} />
             <PrivateRoute path='/stuff/:stuffId' component={SingleStuff} authed={authed} />
-            <PrivateRoute path='/stuff/new' component={New} authed={authed} />
+            <PrivateRoute path='/new' component={New} authed={authed} />
             <PrivateRoute path='/stuff' component={MyStuff} authed={authed} />
             <PublicRoute path='/auth' component={Auth} authed={authed} />
             <Redirect from="*" to="/home"/>
