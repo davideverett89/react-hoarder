@@ -66,7 +66,7 @@ class App extends React.Component {
           <MyNavbar authed={authed} />
           <Switch>
             <PrivateRoute path='/home' component={Home} authed={authed} />
-            <PrivateRoute path='/edit/:stuffId/' component={EditStuff} authed={authed} />
+            <PrivateRoute path='/edit/:stuffId' component={EditStuff} authed={authed} />
             <PrivateRoute path='/stuff/:stuffId' component={SingleStuff} authed={authed} />
             <PrivateRoute path='/new' component={New} authed={authed} />
             <PrivateRoute path='/stuff' component={MyStuff} authed={authed} />

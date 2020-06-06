@@ -9,7 +9,9 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
+
 import PropTypes from 'prop-types';
+
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
