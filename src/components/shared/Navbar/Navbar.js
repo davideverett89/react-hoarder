@@ -38,7 +38,7 @@ class Navbar extends React.Component {
                                     <Link className="nav-link" to='/stuff'>My Stuff</Link>
                                 </li>
                                 <li className="nav-item active">
-                                    <Link className="nav-link" to='/new'>New</Link>
+                                    <Link className="nav-link" to='/stuff/new'>New</Link>
                                 </li>
                             </ul>
                             <ul className="navbar-nav ml-auto">

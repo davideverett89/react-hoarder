@@ -17,6 +17,8 @@ import Auth from '../components/pages/Auth/Auth';
 import Home from '../components/pages/Home/Home';
 import MyStuff from '../components/pages/MyStuff/MyStuff';
 import New from '../components/pages/New/New';
+import EditStuff from '../components/pages/EditStuff/EditStuff';
+import SingleStuff from '../components/pages/SingleStuff/SingleStuff';
 
 import './App.scss';
 
@@ -64,8 +66,10 @@ class App extends React.Component {
           <Navbar authed={authed} />
           <Switch>
             <PrivateRoute path='/home' component={Home} authed={authed} />
+            <PrivateRoute path='/stuff/:stuffId/edit' component={EditStuff} authed={authed} />
+            <PrivateRoute path='/stuff/:stuffId' component={SingleStuff} authed={authed} />
+            <PrivateRoute path='/stuff/new' component={New} authed={authed} />
             <PrivateRoute path='/stuff' component={MyStuff} authed={authed} />
-            <PrivateRoute path='/new' component={New} authed={authed} />
             <PublicRoute path='/auth' component={Auth} authed={authed} />
             <Redirect from="*" to="/home"/>
           </Switch>
