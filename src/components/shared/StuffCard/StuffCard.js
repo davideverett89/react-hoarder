@@ -1,10 +1,17 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+import stuffShape from '../../../helpers/propz/stuffShape';
 
 import './StuffCard.scss';
 
 class StuffCard extends React.Component {
+  static propTypes = {
+    stuff: stuffShape.stuffShape,
+    isSingleView: PropTypes.bool.isRequired,
+  };
+
   render() {
     const { stuff, isSingleView } = this.props;
     const editLink = `/edit/${stuff.id}`;
@@ -12,7 +19,7 @@ class StuffCard extends React.Component {
     return (
         <div className={`StuffCard ${isSingleView ? 'col-9 mx-auto' : 'col-3'}`}>
             <div className="card">
-                <img className="card-img-top" src={stuff.itemImage} alt={stuff.itemName} />
+                {isSingleView ? <img className="card-img-top" src={stuff.itemImage} alt={stuff.itemName} /> : ''}
                 <div className="card-body">
                     {isSingleView ? '' : <h5 className="card-title">{stuff.itemName}</h5>}
                     <p className="card-text">{stuff.itemDescription}</p>
