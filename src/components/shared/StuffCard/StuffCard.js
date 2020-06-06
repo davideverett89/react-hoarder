@@ -22,7 +22,7 @@ class StuffCard extends React.Component {
                 {isSingleView ? <img className="card-img-top" src={stuff.itemImage} alt={stuff.itemName} /> : ''}
                 <div className="card-body">
                     {isSingleView ? '' : <h5 className="card-title">{stuff.itemName}</h5>}
-                    <p className="card-text">{stuff.itemDescription}</p>
+                    {isSingleView ? <p className="card-text">{stuff.itemDescription}</p> : ''}
                 </div>
                 {
                     isSingleView
@@ -30,7 +30,7 @@ class StuffCard extends React.Component {
                       : (
                         <div className="card-footer">
                         <Link className="mx-2 btn btn-warning" to={editLink}>Edit</Link>
-                        <Link className="mx-2 btn btn-info" to={singleLink}>Single</Link>
+                        <Link className="mx-2 btn btn-info" to={singleLink}>View</Link>
                     </div>
                       )
                 }
