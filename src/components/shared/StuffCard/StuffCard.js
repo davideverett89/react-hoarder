@@ -10,7 +10,14 @@ class StuffCard extends React.Component {
   static propTypes = {
     stuff: stuffShape.stuffShape,
     isSingleView: PropTypes.bool.isRequired,
+    removeStuff: PropTypes.func,
   };
+
+  deleteEvent = (e) => {
+    const { removeStuff, stuff } = this.props;
+    e.preventDefault();
+    removeStuff(stuff.id);
+  }
 
   render() {
     const { stuff, isSingleView } = this.props;
@@ -28,10 +35,11 @@ class StuffCard extends React.Component {
                     isSingleView
                       ? ''
                       : (
-                        <div className="card-footer">
+                      <div className="card-footer">
                         <Link className="mx-2 btn btn-warning" to={editLink}>Edit</Link>
                         <Link className="mx-2 btn btn-info" to={singleLink}>View</Link>
-                    </div>
+                        <button className="mx-2 btn btn-danger" onClick={this.deleteEvent}><i className="fas fa-trash-alt"></i></button>
+                      </div>
                       )
                 }
             </div>
