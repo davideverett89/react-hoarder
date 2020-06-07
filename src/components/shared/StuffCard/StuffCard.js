@@ -10,7 +10,7 @@ class StuffCard extends React.Component {
   static propTypes = {
     stuff: stuffShape.stuffShape,
     isSingleView: PropTypes.bool.isRequired,
-    removeStuff: PropTypes.func,
+    removeStuff: PropTypes.func.isRequired,
   };
 
   deleteEvent = (e) => {
@@ -31,17 +31,19 @@ class StuffCard extends React.Component {
                     {isSingleView ? '' : <h5 className="card-title">{stuff.itemName}</h5>}
                     {isSingleView ? <p className="card-text">{stuff.itemDescription}</p> : ''}
                 </div>
+                <div className="card-footer">
                 {
                     isSingleView
                       ? ''
                       : (
-                      <div className="card-footer">
+                      <React.Fragment>
                         <Link className="mx-2 btn btn-warning" to={editLink}>Edit</Link>
                         <Link className="mx-2 btn btn-info" to={singleLink}>View</Link>
-                        <button className="mx-2 btn btn-danger" onClick={this.deleteEvent}><i className="fas fa-trash-alt"></i></button>
-                      </div>
+                      </React.Fragment>
                       )
                 }
+                   <button className="mx-2 btn btn-danger" onClick={this.deleteEvent}><i className="fas fa-trash-alt"></i></button>
+                </div>
             </div>
         </div>
     );
