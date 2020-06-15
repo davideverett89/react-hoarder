@@ -25,6 +25,8 @@ const removeStuff = (stuffId) => axios.delete(`${baseUrl}/items/${stuffId}.json`
 
 const postStuff = (newStuff) => axios.post(`${baseUrl}/items.json`, newStuff);
 
+const putStuff = (stuffId, newStuff) => axios.put(`${baseUrl}/items/${stuffId}.json`, newStuff);
+
 export default {
-  getStuffByUid, getSingleStuff, removeStuff, postStuff,
+  getStuffByUid, getSingleStuff, removeStuff, postStuff, putStuff,
 };
