@@ -37,12 +37,12 @@ class StuffCard extends React.Component {
                       ? ''
                       : (
                       <React.Fragment>
-                        <Link className="mx-2 btn btn-warning" to={editLink}>Edit</Link>
                         <Link className="mx-2 btn btn-info" to={singleLink}>View</Link>
                       </React.Fragment>
                       )
                 }
                    <button className="mx-2 btn btn-danger" onClick={this.deleteEvent}><i className="fas fa-trash-alt"></i></button>
+                   <Link className="mx-2 btn btn-warning" to={editLink}>Edit</Link>
                 </div>
             </div>
         </div>
